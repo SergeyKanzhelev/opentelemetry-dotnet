@@ -16,6 +16,7 @@
 using System;
 using OpenTelemetry.Collector.AspNetCore.Implementation;
 using OpenTelemetry.Trace;
+using Microsoft.Extensions.Options;
 
 namespace OpenTelemetry.Collector.AspNetCore
 {
@@ -31,7 +32,7 @@ namespace OpenTelemetry.Collector.AspNetCore
         /// </summary>
         /// <param name="tracer">Tracer to record traced with.</param>
         public AspNetCoreCollector(ITracer tracer)
-            : this(tracer, new AspNetCoreCollectorOptions())
+            : this(tracer, Options.Create<AspNetCoreCollectorOptions>(new AspNetCoreCollectorOptions()))
         {
         }
 
@@ -40,9 +41,9 @@ namespace OpenTelemetry.Collector.AspNetCore
         /// </summary>
         /// <param name="tracer">Tracer to record traced with.</param>
         /// <param name="options">Configuration options for dependencies collector.</param>
-        public AspNetCoreCollector(ITracer tracer, AspNetCoreCollectorOptions options)
+        public AspNetCoreCollector(ITracer tracer, IOptions<AspNetCoreCollectorOptions> options)
         {
-            this.diagnosticSourceSubscriber = new DiagnosticSourceSubscriber(new HttpInListener("Microsoft.AspNetCore", tracer), options.EventFilter);
+            this.diagnosticSourceSubscriber = new DiagnosticSourceSubscriber(new HttpInListener("Microsoft.AspNetCore", tracer), options.Value.EventFilter);
             this.diagnosticSourceSubscriber.Subscribe();
         }
 
