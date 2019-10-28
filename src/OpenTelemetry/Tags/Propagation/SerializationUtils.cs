@@ -90,9 +90,9 @@ namespace OpenTelemetry.Tags.Propagation
             }
         }
 
-        internal static IDictionary<TagKey, TagValue> ParseTags(MemoryStream buffer)
+        internal static IDictionary<string, string> ParseTags(MemoryStream buffer)
         {
-            IDictionary<TagKey, TagValue> tags = new Dictionary<TagKey, TagValue>();
+            IDictionary<string, string> tags = new Dictionary<string, string>();
             var limit = buffer.Length;
             var totalChars = 0; // Here chars are equivalent to bytes, since we're using ascii chars.
             while (buffer.Position < limit)
@@ -124,13 +124,13 @@ else
             return tags;
         }
 
-        // TODO(sebright): Consider exposing a TagKey name validation method to avoid needing to catch an
+        // TODO(sebright): Consider exposing a string name validation method to avoid needing to catch an
         // IllegalArgumentException here.
-        private static TagKey CreateTagKey(string name)
+        private static string CreateTagKey(string name)
         {
             try
             {
-                return TagKey.Create(name);
+                return name);
             }
             catch (Exception e)
             {
@@ -138,13 +138,13 @@ else
             }
         }
 
-        // TODO(sebright): Consider exposing a TagValue validation method to avoid needing to catch
+        // TODO(sebright): Consider exposing a string validation method to avoid needing to catch
         // an IllegalArgumentException here.
-        private static TagValue CreateTagValue(TagKey key, string value)
+        private static string CreateTagValue(string key, string value)
         {
             try
             {
-                return TagValue.Create(value);
+                return value);
             }
             catch (Exception e)
             {

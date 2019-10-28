@@ -23,54 +23,54 @@ namespace OpenTelemetry.Tags.Test
         [Fact]
         public void TestMaxLength()
         {
-            Assert.Equal(255, TagValue.MaxLength);
+            Assert.Equal(255, string.MaxLength);
         }
 
         [Fact]
         public void TestAsString()
         {
-            Assert.Equal("foo", TagValue.Create("foo").AsString);
+            Assert.Equal("foo", "foo").AsString);
         }
 
         [Fact]
         public void Create_AllowTagValueWithMaxLength()
         {
-            var chars = new char[TagValue.MaxLength];
+            var chars = new char[string.MaxLength];
             for (var i = 0; i < chars.Length; i++)
             {
                 chars[i] = 'v';
             }
 
             var value = new String(chars);
-            Assert.Equal(value, TagValue.Create(value).AsString);
+            Assert.Equal(value, value).AsString);
         }
 
         [Fact]
         public void Create_DisallowTagValueOverMaxLength()
         {
-            var chars = new char[TagValue.MaxLength + 1];
+            var chars = new char[string.MaxLength + 1];
             for (var i = 0; i < chars.Length; i++)
             {
                 chars[i] = 'v';
             }
 
             var value = new String(chars);
-            Assert.Throws<ArgumentOutOfRangeException>(() => TagValue.Create(value));
+            Assert.Throws<ArgumentOutOfRangeException>(() => value));
         }
 
         [Fact]
         public void DisallowTagValueWithUnprintableChars()
         {
             var value = "\u02ab\u03cd";
-            Assert.Throws<ArgumentOutOfRangeException>(() => TagValue.Create(value));
+            Assert.Throws<ArgumentOutOfRangeException>(() => value));
         }
 
         [Fact]
         public void TestTagValueEquals()
         {
-            var v1 = TagValue.Create("foo");
-            var v2 = TagValue.Create("foo");
-            var v3 = TagValue.Create("bar");
+            var v1 = "foo");
+            var v2 = "foo");
+            var v3 = "bar");
             Assert.Equal(v1, v2);
             Assert.NotEqual(v1, v3);
             Assert.NotEqual(v2, v3);
